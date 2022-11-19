@@ -32,6 +32,7 @@ export class eventService {
       if (eventData.length < 1) {
         throw new HttpException(`data not found`, HttpStatus.NOT_FOUND);
       }
+
       return {
         message: 'successfully get data',
         data: eventData,
@@ -40,17 +41,38 @@ export class eventService {
       throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
+
+  async findWorkshopByEvent(id: number) {
+    try {
+      const mainEventData = await this.getActiveEventData(id);
+      const workshops = await this.getWorkshop(id);
+      const finalResponse = { ...mainEventData, workshops };
+
+      if (mainEventData.length < 1) {
+        throw new HttpException(`data not found`, HttpStatus.NOT_FOUND);
+      }
+
+      return {
+        message: 'successfully get data',
+        data: finalResponse,
+      };
+    } catch (error) {
+      throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
+    }
+  }
   async generatePage(current_page: number, per_page: number) {
     current_page = current_page < 1 ? 1 : current_page;
+
     const totalData = await this.knex('events')
       .pluck('id')
-      .where('start_at', '<=', new Date())
-      .where('end_at', '>=', new Date());
+      .where('start_at', '>=', new Date());
+
     const total = totalData.length;
     const total_page =
       total % per_page == 0
         ? total / per_page
         : Math.floor(total / per_page) + 1;
+
     return {
       total,
       per_page,
@@ -61,8 +83,7 @@ export class eventService {
   async getEvents(offset: number, per_page: number): Promise<any> {
     const queryResult = await this.knex
       .table('events')
-      .where('start_at', '<=', new Date())
-      .where('end_at', '>=', new Date())
+      .where('start_at', '>=', new Date())
       .limit(per_page)
       .offset(offset);
     return queryResult;
@@ -76,6 +97,20 @@ export class eventService {
         this.on('events.id ', 'workshops.event_id');
       })
       .where('events.id', id);
+    return queryResult;
+  }
+  async getActiveEventData(id: number) {
+    const queryResult = await this.knex('events')
+      .select('id', 'title', 'start_at', 'end_at')
+      .first()
+      .where('id', id)
+      .where('start_at', '>=', new Date());
+    return queryResult;
+  }
+  async getWorkshop(event_id: number) {
+    const queryResult = await this.knex('workshops')
+      .select('id', 'title', 'description', 'start_at', 'end_at')
+      .where('event_id', event_id);
     return queryResult;
   }
 }

@@ -18,8 +18,16 @@ export class eventController {
   }
 
   @Get('/:id')
-  async getsignle(@Param('id') id: number) {
+  async getevent(@Param('id') id: number) {
     const { data, message } = await this.eventService.findOne(id);
+    return { message, data };
+  }
+
+  @Get('/:id/workshops')
+  async getworkshops(@Param('id') event_id: number) {
+    const { data, message } = await this.eventService.findWorkshopByEvent(
+      event_id,
+    );
     return { message, data };
   }
 }
