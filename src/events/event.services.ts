@@ -38,7 +38,6 @@ export class eventService {
       throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
-
   async findWorkshopByEvent(id: number): Promise<any> {
     try {
       const mainEventData = await this.getActiveEventData(id);
