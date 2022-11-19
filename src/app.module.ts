@@ -3,6 +3,7 @@ import { KnexModule } from 'nest-knexjs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
+import { WorkshopsModule } from './workshops/workshops.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EventsModule } from './events/events.module';
       },
     }),
     EventsModule,
+    WorkshopsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

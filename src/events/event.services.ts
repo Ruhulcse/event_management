@@ -1,9 +1,6 @@
 import { Knex } from 'knex';
 import { InjectModel } from 'nest-knexjs';
-import { attachPaginate } from 'knex-paginate';
 import { HttpException, HttpStatus } from '@nestjs/common';
-
-attachPaginate();
 
 export class eventService {
   constructor(@InjectModel() private readonly knex: Knex) {}
@@ -25,7 +22,7 @@ export class eventService {
       throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
-  async findOne(id: number) {
+  async findOne(id: number): Promise<any> {
     try {
       const eventData = await this.getEventData(id);
 
@@ -42,7 +39,7 @@ export class eventService {
     }
   }
 
-  async findWorkshopByEvent(id: number) {
+  async findWorkshopByEvent(id: number): Promise<any> {
     try {
       const mainEventData = await this.getActiveEventData(id);
       const workshops = await this.getWorkshop(id);
@@ -60,7 +57,7 @@ export class eventService {
       throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
-  async generatePage(current_page: number, per_page: number) {
+  async generatePage(current_page: number, per_page: number): Promise<any> {
     current_page = current_page < 1 ? 1 : current_page;
 
     const totalData = await this.knex('events')
@@ -88,7 +85,7 @@ export class eventService {
       .offset(offset);
     return queryResult;
   }
-  async getEventData(id: number) {
+  async getEventData(id: number): Promise<any> {
     const queryResult = await this.knex('events')
       .select('events.id', 'events.title', 'events.start_at', 'events.end_at')
       .count('workshops.event_id AS workshops')
@@ -99,7 +96,7 @@ export class eventService {
       .where('events.id', id);
     return queryResult;
   }
-  async getActiveEventData(id: number) {
+  async getActiveEventData(id: number): Promise<any> {
     const queryResult = await this.knex('events')
       .select('id', 'title', 'start_at', 'end_at')
       .first()
@@ -107,7 +104,7 @@ export class eventService {
       .where('start_at', '>=', new Date());
     return queryResult;
   }
-  async getWorkshop(event_id: number) {
+  async getWorkshop(event_id: number): Promise<any> {
     const queryResult = await this.knex('workshops')
       .select('id', 'title', 'description', 'start_at', 'end_at')
       .where('event_id', event_id);
