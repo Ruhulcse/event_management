@@ -30,6 +30,8 @@ $ npm run start:prod
 
 API endpoint: http://localhost:4000/api/v1/events?page=1&per_page=3
 
+Request method: GET
+
 Response : 
 ```json
 {
@@ -70,6 +72,8 @@ Response :
 
 API endpoint:  http://localhost:4000/api/v1/events/1
 
+Request method: GET
+
 Response 
 ```json
 {
@@ -88,6 +92,8 @@ Response
 event
 
 API endpoint:  http://localhost:4000/api/v1/events/1/workshops
+
+Request method: GET
 
 Response: 
 ```json
@@ -129,6 +135,8 @@ Response:
 
 API endpoint: http://localhost:4000/api/v1/workshops/1
 
+Request method: GET
+
 Response: 
 ```json
 {
@@ -143,9 +151,48 @@ Response:
     }
 }
 ```
-## Stay in touch
 
+5. Workshop reservation API
 
-## License
+API endpoint: http://localhost:4000/api/v1/workshops/reservation
+
+Request method: POST
+
+request body: 
+```json
+{
+    "name": "Rakib",
+    "email": "rakib@gmail.com",
+    "workshop_id": 1
+}
+```
+
+Response : 
+```
+{
+    "message": "data inserted",
+    "data": {
+        "reservation": {
+            "id": 5,
+            "name": "Rakib",
+            "email": "rakib@gmail.com",
+        },
+        "event": {
+            "id": 1,
+            "title": "JS Meetup",
+            "start_at": "2022-11-27T04:31:26.000Z",
+            "end_at": "2022-11-28T04:31:35.000Z"
+        },
+        "workshop": {
+            "id": 1,
+            "title": "introduction to javascript",
+            "description": "basic javascript",
+            "start_at": "2022-11-27T10:35:53.000Z",
+            "end_at": "2022-11-28T10:36:05.000Z"
+        }
+    }
+}
+
+```
 
 
