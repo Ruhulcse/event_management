@@ -1,26 +1,4 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
@@ -45,29 +23,129 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## API Documentation 
 
-# e2e tests
-$ npm run test:e2e
+1. Get all active events with pagination
 
-# test coverage
-$ npm run test:cov
+API endpoint: http://localhost:4000/api/v1/events?page=1&per_page=3
+
+Response : 
+```json
+{
+    "message": "successfully get data",
+    "data": {
+        "events": [
+            {
+                "id": 1,
+                "title": "JS Meetup",
+                "start_at": "2022-11-27T04:31:26.000Z",
+                "end_at": "2022-11-28T04:31:35.000Z"
+            },
+            {
+                "id": 2,
+                "title": "BITPA",
+                "start_at": "2022-11-27T04:31:26.000Z",
+                "end_at": "2022-11-30T04:31:35.000Z"
+            },
+            {
+                "id": 3,
+                "title": "National Collegiate Programming Contest",
+                "start_at": "2022-11-25T04:31:26.000Z",
+                "end_at": "2022-11-29T04:31:35.000Z"
+            }
+        ],
+        "paginate": {
+            "total": 10,
+            "per_page": "3",
+            "total_page": 4,
+            "current_page": "1"
+        }
+    }
+}
+
+``` 
+
+2. GET single events
+
+API endpoint:  http://localhost:4000/api/v1/events/1
+
+Response 
+```json
+{
+    "message": "successfully get data",
+    "data": {
+        "id": 1,
+        "title": "JS Meetup",
+        "start_at": "2022-11-27T04:31:26.000Z",
+        "end_at": "2022-11-28T04:31:35.000Z",
+        "workshops": 3
+    }
+}
+````
+
+3. Workshop List API, where we can get all the active workshops of a single
+event
+
+API endpoint:  http://localhost:4000/api/v1/events/1/workshops
+
+Response: 
+```json
+{
+    "message": "successfully get data",
+    "data": {
+        "id": 1,
+        "title": "JS Meetup",
+        "start_at": "2022-11-27T04:31:26.000Z",
+        "end_at": "2022-11-28T04:31:35.000Z",
+        "workshops": [
+            {
+                "id": 1,
+                "title": "introduction to javascript",
+                "description": "basic javascript",
+                "start_at": "2022-11-27T10:35:53.000Z",
+                "end_at": "2022-11-28T10:36:05.000Z"
+            },
+            {
+                "id": 2,
+                "title": "Basic js",
+                "description": "basic js description",
+                "start_at": "2022-11-27T10:35:53.000Z",
+                "end_at": "2022-11-28T10:36:05.000Z"
+            },
+            {
+                "id": 3,
+                "title": "Array in Js",
+                "description": "Array in JS description",
+                "start_at": "2022-11-27T10:35:53.000Z",
+                "end_at": "2022-11-28T10:36:05.000Z"
+            }
+        ]
+    }
+}
 ```
 
-## Support
+4. Workshop Details API, where we can get single workshop information
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+API endpoint: http://localhost:4000/api/v1/workshops/1
 
+Response: 
+```json
+{
+    "message": "successfully get data",
+    "data": {
+        "id": 1,
+        "title": "introduction to javascript",
+        "description": "basic javascript",
+        "start_at": "2022-11-27T10:35:53.000Z",
+        "end_at": "2022-11-28T10:36:05.000Z",
+        "total_reservations": 2
+    }
+}
+```
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+
