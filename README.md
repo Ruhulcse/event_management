@@ -28,7 +28,11 @@ $ npm run start:prod
 
 1. Get all active events with pagination
 
-API endpoint: http://localhost:4000/api/v1/events?page=1&per_page=3
+API endpoint: api/v1/events?page=number&per_page=number
+
+example: http://localhost:4000/api/v1/events?page=1&per_page=3
+
+Query param = page & per_page
 
 Request method: GET
 
@@ -70,7 +74,9 @@ Response :
 
 2. GET single events
 
-API endpoint:  http://localhost:4000/api/v1/events/1
+API endpoint:  api/v1/events/1
+
+example: http://localhost:4000/api/v1/events/1
 
 Request method: GET
 
@@ -91,7 +97,9 @@ Response
 3. Workshop List API, where we can get all the active workshops of a single
 event
 
-API endpoint:  http://localhost:4000/api/v1/events/1/workshops
+API endpoint: api/v1/events/1/workshops
+
+Example:  http://localhost:4000/api/v1/events/1/workshops
 
 Request method: GET
 
@@ -133,7 +141,9 @@ Response:
 
 4. Workshop Details API, where we can get single workshop information
 
-API endpoint: http://localhost:4000/api/v1/workshops/1
+API endpoint: api/v1/workshops/1
+
+Example: http://localhost:4000/api/v1/workshops/1
 
 Request method: GET
 
@@ -154,7 +164,9 @@ Response:
 
 5. Workshop reservation API
 
-API endpoint: http://localhost:4000/api/v1/workshops/reservation
+API endpoint: api/v1/workshops/reservation
+
+Example: http://localhost:4000/api/v1/workshops/reservation
 
 Request method: POST
 
