@@ -25,6 +25,21 @@ export class eventService {
       throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
+  async findOne(id: number) {
+    try {
+      const eventData = await this.getEventData(id);
+
+      if (eventData.length < 1) {
+        throw new HttpException(`data not found`, HttpStatus.NOT_FOUND);
+      }
+      return {
+        message: 'successfully get data',
+        data: eventData,
+      };
+    } catch (error) {
+      throw new HttpException(`${error.message}`, HttpStatus.BAD_REQUEST);
+    }
+  }
   async generatePage(current_page: number, per_page: number) {
     current_page = current_page < 1 ? 1 : current_page;
     const totalData = await this.knex('events')
@@ -50,6 +65,17 @@ export class eventService {
       .where('end_at', '>=', new Date())
       .limit(per_page)
       .offset(offset);
+    return queryResult;
+  }
+  async getEventData(id: number) {
+    const queryResult = await this.knex('events')
+      .select('events.id', 'events.title', 'events.start_at', 'events.end_at')
+      .count('workshops.event_id AS workshops')
+      .first()
+      .innerJoin('workshops', function () {
+        this.on('events.id ', 'workshops.event_id');
+      })
+      .where('events.id', id);
     return queryResult;
   }
 }
