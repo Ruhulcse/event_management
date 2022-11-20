@@ -2,7 +2,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Event management crud 
+
+SQL FILE contains in the sql file.zip
 
 ## Installation
 
