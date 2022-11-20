@@ -19,8 +19,6 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
 
@@ -28,7 +26,13 @@ $ npm run start:prod
 
 1. Get all active events with pagination
 
-API endpoint: http://localhost:4000/api/v1/events?page=1&per_page=3
+API endpoint: api/v1/events?page=number&per_page=number
+
+example: http://localhost:4000/api/v1/events?page=1&per_page=3
+
+Query param = page & per_page
+
+Request method: GET
 
 Response : 
 ```json
@@ -68,7 +72,11 @@ Response :
 
 2. GET single events
 
-API endpoint:  http://localhost:4000/api/v1/events/1
+API endpoint:  api/v1/events/1
+
+example: http://localhost:4000/api/v1/events/1
+
+Request method: GET
 
 Response 
 ```json
@@ -87,7 +95,11 @@ Response
 3. Workshop List API, where we can get all the active workshops of a single
 event
 
-API endpoint:  http://localhost:4000/api/v1/events/1/workshops
+API endpoint: api/v1/events/1/workshops
+
+Example:  http://localhost:4000/api/v1/events/1/workshops
+
+Request method: GET
 
 Response: 
 ```json
@@ -127,7 +139,11 @@ Response:
 
 4. Workshop Details API, where we can get single workshop information
 
-API endpoint: http://localhost:4000/api/v1/workshops/1
+API endpoint: api/v1/workshops/1
+
+Example: http://localhost:4000/api/v1/workshops/1
+
+Request method: GET
 
 Response: 
 ```json
@@ -143,9 +159,50 @@ Response:
     }
 }
 ```
-## Stay in touch
 
+5. Workshop reservation API
 
-## License
+API endpoint: api/v1/workshops/reservation
+
+Example: http://localhost:4000/api/v1/workshops/reservation
+
+Request method: POST
+
+request body: 
+```json
+{
+    "name": "Rakib",
+    "email": "rakib@gmail.com",
+    "workshop_id": 1
+}
+```
+
+Response : 
+```
+{
+    "message": "data inserted",
+    "data": {
+        "reservation": {
+            "id": 5,
+            "name": "Rakib",
+            "email": "rakib@gmail.com",
+        },
+        "event": {
+            "id": 1,
+            "title": "JS Meetup",
+            "start_at": "2022-11-27T04:31:26.000Z",
+            "end_at": "2022-11-28T04:31:35.000Z"
+        },
+        "workshop": {
+            "id": 1,
+            "title": "introduction to javascript",
+            "description": "basic javascript",
+            "start_at": "2022-11-27T10:35:53.000Z",
+            "end_at": "2022-11-28T10:36:05.000Z"
+        }
+    }
+}
+
+```
 
 
